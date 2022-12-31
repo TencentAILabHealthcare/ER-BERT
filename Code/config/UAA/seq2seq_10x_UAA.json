@@ -1,0 +1,81 @@
+{
+    "name": "10X-Seq2seq-Evaluate-UAA",
+    "n_gpu": 1,
+
+    "data_loader": {
+        "type": "EpitopeReceptorDataset",
+        "args":{
+            "seed": 0,
+            "batch_size": 256,
+            "data_dir": "../ProcessedData/10X/new",
+            "shuffle": true,
+            "use_part": 10000,
+            "use_binary": true,
+            "neg_ratio": 1.0,
+            "validation_split": 0.1, 
+            "test_split": 0.1,
+            "use_selected_epitopes": false,
+            "generation_discriminator_split": true,
+            "discriminator_ratio": 0.8,
+            
+            "epitope_vocab_dir": "../ProcessedData/vocab/epitope-2-3.csv",
+            "receptor_vocab_dir": "../ProcessedData/vocab/beta-2-3.csv",
+            "epitope_tokenizer_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "receptor_tokenizer_dir": "../Result/checkpoints/BERT-Beta-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "epitope_tokenizer_name": "UAA",
+            "receptor_tokenizer_name": "UAA",
+            "epitope_token_length_list": "2,3",
+            "receptor_token_length_list": "2,3",
+            "epitope_max_len": 64,
+            "receptor_max_len": 32,
+            "epitope_seq_name": "epitope", 
+            "receptor_seq_name": "beta"
+        }
+    },
+
+    "data_loader_discriminator": {
+        "type": "EpitopeReceptorDataset",
+        "args":{
+            "seed": 0,
+            "batch_size": 512,
+            "data_dir": "../ProcessedData/10X/new",
+            "shuffle": true,
+            "use_part": 10000,
+            "use_binary": false,
+            "neg_ratio": 0.5,
+            
+            "epitope_vocab_dir": "../ProcessedData/vocab/epitope-2-3.csv",
+            "receptor_vocab_dir": "../ProcessedData/vocab/beta-2-3.csv",
+            "epitope_tokenizer_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "receptor_tokenizer_dir": "../Result/checkpoints/BERT-Beta-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "epitope_tokenizer_name": "UAA",
+            "receptor_tokenizer_name": "UAA",
+            "epitope_token_length_list": "2,3",
+            "receptor_token_length_list": "2,3",
+            "epitope_max_len": 64,
+            "receptor_max_len": 32,
+            "epitope_seq_name": "epitope", 
+            "receptor_seq_name": "beta"
+        }
+    },
+
+
+    "discriminator": {
+        "type": "BERTBinding",
+        "args": {
+            "epitope_tokenizer_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "receptor_tokenizer_dir": "../Result/checkpoints/BERT-Beta-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "emb_dim": 768
+        }
+    },
+
+    "TransformerVariant": "Epitope-Receptor",
+    "resume": "../Result/checkpoints/10X-ERTransformer-Finetuning-Seq2seq-UAA/XXXX_XXXXXX",
+    "discriminator_resume": "../Result/checkpoints/External-10X-BSP-UAA/XXXX_XXXXXX/model_best.pth",
+
+    "trainer": {
+        "save_dir": "../Result/",
+        "verbosity": 2
+    }
+
+}

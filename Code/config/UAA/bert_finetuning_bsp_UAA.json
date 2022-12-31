@@ -1,0 +1,72 @@
+{
+    "name": "BERT-Finetunning-BSP-UAA",
+    "n_gpu": 1,
+
+    "data_loader": {
+        "type": "EpitopeReceptorDataset",
+        "args":{
+            "seed": 0,
+            "batch_size": 512,
+            "validation_split": 0.1,
+            "test_split": 0.0,
+            "num_workers": 1,
+            "data_dir": "../ProcessedData",
+            "seq_dir": "../ProcessedData/merged",
+            "neg_pair_save_dir": "../ProcessedData/epitope-beta-binding",
+            "using_dataset": "VDJdb,IEDB-Receptor,PIRD,Glanville,Dash,McPAS,NetTCR",
+            "epitope_vocab_dir": "../ProcessedData/vocab/epitope-2-3.csv",
+            "receptor_vocab_dir": "../ProcessedData/vocab/beta-2-3.csv",
+            "epitope_tokenizer_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "receptor_tokenizer_dir": "../Result/checkpoints/BERT-Beta-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "epitope_tokenizer_name": "UAA",
+            "receptor_tokenizer_name": "UAA",
+            "epitope_seq_name": "epitope", 
+            "receptor_seq_name": "beta",
+            "test_epitopes": 1000,
+            "neg_ratio": 1.0,
+            "shuffle": true,
+            "epitope_max_len": 64,
+            "receptor_max_len": 32
+        }
+    },
+
+    "arch": {
+        "type": "BERTBinding",
+        "args": {
+            "EpitopeBert_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "ReceptorBert_dir": "../Result/checkpoints/BERT-Beta-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "emb_dim": 768
+        }
+    },
+
+    "optimizer": {
+        "type": "AdamW",
+        "args":{
+            "lr": 5e-5,
+            "weight_decay": 0
+        }
+    },
+    "loss": "bce_withlogits_loss",
+    "metrics": [
+        "accuracy", "recall", "roc_auc"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 10,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 5,
+
+        "save_dir": "../Result/",
+        "save_period": 200,
+        "verbosity": 2,
+        
+        "monitor": "min val_loss",
+        "early_stop": 3,
+
+        "tensorboard": true
+    }
+}

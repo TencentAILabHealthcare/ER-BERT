@@ -1,0 +1,71 @@
+{
+    "name": "External-MIRA-BSP-UAA",
+    "n_gpu": 1,
+
+    "data_loader": {
+        "type": "EpitopeReceptorDataset",
+        "args":{
+            "seed": 0,
+            "batch_size": 512,
+            "data_dir": "../ProcessedData/MIRA",
+            "seq_dir": "../ProcessedData/merged",
+            "shuffle": true,
+            "neg_ratio": 1.0,
+            "validation_split": 0.1, 
+            "test_split": 0.1,
+            "generation_discriminator_split": true,
+            "discriminator_ratio": 0.8,
+
+            "epitope_vocab_dir": "../ProcessedData/vocab/epitope-2-3.csv",
+            "receptor_vocab_dir": "../ProcessedData/vocab/beta-2-3.csv",
+            "epitope_tokenizer_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "receptor_tokenizer_dir": "../Result/checkpoints/BERT-Beta-Pretrain-UAA-MAA/XXXX_XXXXXX",
+            "epitope_tokenizer_name": "UAA",
+            "receptor_tokenizer_name": "UAA",
+            "epitope_seq_name": "epitope", 
+            "receptor_seq_name": "beta",
+            "epitope_max_len": 32,
+            "receptor_max_len": 32
+        }
+    },
+
+    "arch": {
+        "type": "BERTBinding",
+        "args": {
+            "EpitopeBert_dir": "../Result/checkpoints/BERT-Finetunning-BSP-UAA/XXXX_XXXXXX",
+            "ReceptorBert_dir": "../Result/checkpoints/BERT-Finetunning-BSP-UAA/XXXX_XXXXXX",
+            "emb_dim": 768
+        }
+    },
+
+    "optimizer": {
+        "type": "AdamW",
+        "args":{
+            "lr": 5e-5,
+            "weight_decay": 0.5
+        }
+    },
+    "loss": "bce_withlogits_loss",
+    "metrics": [
+        "accuracy", "recall", "roc_auc"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 10,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 50,
+
+        "save_dir": "../Result/",
+        "save_period": 200,
+        "verbosity": 2,
+        
+        "monitor": "max val_roc_auc",
+        "early_stop": 5,
+
+        "tensorboard": true
+    }
+}

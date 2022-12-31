@@ -1,0 +1,62 @@
+{
+    "name": "10X-ERTransformer-Finetuning-Seq2seq-FMFM",
+    "n_gpu": 1,
+
+    "data_loader": {
+        "type": "EpitopeReceptorDataset",
+        "args":{
+            "seed": 0,
+            "batch_size": 256,
+            "data_dir": "../ProcessedData/10X/new",
+            "shuffle": true,
+            "use_part": 10000,
+            "use_binary": true,
+            "neg_ratio": 1.0,
+            "validation_split": 0.1, 
+            "test_split": 0.1,
+            "use_selected_epitopes": false,
+            "generation_discriminator_split": true,
+            "discriminator_ratio": 0.8,
+
+            "epitope_vocab_dir": "../ProcessedData/vocab/epitope-2-3.csv",
+            "receptor_vocab_dir": "../ProcessedData/vocab/beta-2-3.csv",
+            "epitope_tokenizer_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+            "receptor_tokenizer_dir": "../Result/checkpoints/BERT-Beta-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+            "epitope_tokenizer_name": "FMFM",
+            "receptor_tokenizer_name": "FMFM",
+            "epitope_seq_name": "epitope", 
+            "receptor_seq_name": "beta",
+            "epitope_max_len": 32,
+            "receptor_max_len": 32,
+            "encoder_input": "epitope"
+        }
+    },
+
+    "model": {
+        "TransformerVariant": "Epitope-Receptor",
+        "EpitopeBert_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+        "ReceptorBert_dir": "../Result/checkpoints/BERT-Beta-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+        "beam_search":{
+            "early_stopping": true,
+            "num_beams": 5,
+            "no_repeat_ngram_size": 2
+        },
+        "resume": "../Result_large/checkpoints/ERTransformer-Finetuning-Seq2seq-FMFM/XXXX_XXXXXX"
+    },
+
+    "metrics":{
+        "blosum_dir": "../RawData/blosum62.json",
+        "blosum": true
+    },
+
+    "trainer": {
+        "epochs": 5,
+        "batch_size": 32,
+        "save_dir": "../Result/",
+        "lr": 5e-5,
+        "warmup": 0.1,
+        "eval_accumulation_steps": 1,
+        "logging_steps": 20
+    }
+
+}

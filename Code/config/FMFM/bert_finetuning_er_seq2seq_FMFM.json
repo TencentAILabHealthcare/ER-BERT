@@ -1,0 +1,59 @@
+{
+    "name": "ERTransformer-Finetuning-Seq2seq-FMFM",
+    "n_gpu": 1,
+
+    "data_loader": {
+        "type": "EpitopeReceptorSeq2SeqDataset",
+        "args":{
+            "seed": 0,
+            "data_dir": "../ProcessedData",
+            "seq_dir": "../ProcessedData/merged",
+            "neg_pair_save_dir": "../ProcessedData/epitope-beta-binding",
+            "using_dataset": "VDJdb,IEDB-Receptor,PIRD,Glanville,Dash,McPAS,NetTCR",
+
+            "epitope_vocab_dir": "../ProcessedData/vocab/epitope-2-3.csv",
+            "receptor_vocab_dir": "../ProcessedData/vocab/beta-2-3.csv",
+            "epitope_tokenizer_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+            "receptor_tokenizer_dir": "../Result/checkpoints/BERT-Beta-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+            "epitope_tokenizer_name": "FMFM",
+            "receptor_tokenizer_name": "FMFM",
+            "epitope_token_length_list": "2,3",
+            "receptor_token_length_list": "2,3",
+            "epitope_seq_name": "epitope", 
+            "receptor_seq_name": "beta",
+            "epitope_max_len": 32,
+            "receptor_max_len": 32,
+
+            "encoder_input": "epitope",
+            "valid_split": 0.01,
+            "shuffle": true
+        }
+    },
+
+    "model": {
+        "TransformerVariant": "Epitope-Receptor",
+        "EpitopeBert_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+        "ReceptorBert_dir": "../Result/checkpoints/BERT-Beta-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+        "beam_search":{
+            "early_stopping": true,
+            "num_beams": 5,
+            "no_repeat_ngram_size": 2
+        }
+    },
+
+    "metrics":{
+        "blosum_dir": "../RawData/blosum62.json",
+        "blosum": true
+    },
+
+    "trainer": {
+        "epochs": 1,
+        "batch_size": 32,
+        "save_dir": "../Result/",
+        "lr": 5e-5,
+        "warmup": 0.1,
+        "eval_accumulation_steps": 1,
+        "logging_steps": 20
+    }
+
+}
