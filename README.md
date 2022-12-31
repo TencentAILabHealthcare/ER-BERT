@@ -1,5 +1,6 @@
 # ER-BERT
 ER-BERT is a pre-trained model for the de novo generation of epitope-binding TCR, which is composed of two BERT modules: EpitopeBERT and ReceptorBERT.
+![image](https://github.com/TencentAILabHealthcare/ER-BERT/blob/main/Workflow.jpg)
 ## Installation
 To install the required packages for running ER-BERT, please use the following command
 ```bash
