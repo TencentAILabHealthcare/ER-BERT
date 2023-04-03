@@ -58,7 +58,7 @@ After the above pre-training and fine-tuning, ER-BERT will generate three .csv f
 ## Model availability
 ER-BERT with two tokenizers on all the three tasks (MAA, Seq2Seq, and BSP) on the comprehensive training dataset are available on Zenodo: https://doi.org/10.5281/zenodo.7494046. And you can fine-tuning it on your own dataset as we described in the above section (Section 4. Utilization).
 ## Data availability
-Due to the space limitation, we present part of data used in this project in the folder `ProcessedData`. We have also included a demo dataset that utilizes publicly available datasets in this study for reference. To access the demo data, please download [the demo data](https://drive.google.com/file/d/1DqZC1FUkuKEDt88hT2qZRA44-k_UT3RI/view?usp=sharing) via google drive and place all of the files into the `ProcessedData` folder. Then you can directly run the model following above instructions. For the full data, please contact us.
+Due to the space limitation, we present part of data used in this project in the folder `ProcessedData`. We have also included a demo dataset that utilizes publicly available datasets in this study for reference. To access the demo data, please download [the demo data via google drive](https://drive.google.com/file/d/1DqZC1FUkuKEDt88hT2qZRA44-k_UT3RI/view?usp=sharing) and place all of the files into the `ProcessedData` folder. Then you can directly run the model following above instructions. For the full data, please contact us.
 ## Contact
 If you have any questions, please contact us via email: 
 - [Jiannan Yang](mailto:jiannan.yang@my.cityu.edu.hk)
