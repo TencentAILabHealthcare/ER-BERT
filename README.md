@@ -6,6 +6,8 @@ To install the required packages for running ER-BERT, please use the following c
 ```bash
 pip install -r requirements.txt
 ```
+## System requirements
+We have tested our model on a workstation with with the following specifications: 2xRTX 3090, i9-10920X processer, 128 GB of RAM, and 24x2 GB GPU RAM. The system is running version 20.04.1-Ubuntu.
 ## How to train and use ER-BERT
 The training of ER-BERT for TCR generation is composed of two steps: MAA Task and Seq2Seq task. The details of each training are in the `Code/config` folder. For example, for the FMFM tokenizer, all the related config files are in the `Code/config/FMFM` folder. Here we use the FMFM tokenizer as an example to show how to use ER-BERT for TCR generation. Note that all the commands are run in the `Code` folder.
 ### 1. MAA Task
@@ -51,12 +53,13 @@ For the external discriminator, please use your desired one first (here use the 
 ```bash
 python evaluate_seq2seq_MIRA.py --config config/FMFM/seq2seq_MIRA_FMFM.json
 ```
+### 5. Expected output
+After the above pre-training and fine-tuning, ER-BERT will generate three .csv files: `result.csv`, `true_discriminator.csv`, and `generated_discriminator.csv`. `result.csv` contains the beta sequences (default 1000) generated for each input epitopes, with two columns *epitope, generated_beta*. `true_discriminator.csv`, and `generated_discriminator.csv` present the predicted binding specificity by the external discriminator for true and generated beta sequences, respectively. Both files contain four columns: *epitope, receptor, label_pred, and label_true*. Note that a value of -1 in the *label_true* column indicates that the beta sequences were generated. 
 ## Model availability
 ER-BERT with two tokenizers on all the three tasks (MAA, Seq2Seq, and BSP) on the comprehensive training dataset are available on Zenodo: https://doi.org/10.5281/zenodo.7494046. And you can fine-tuning it on your own dataset as we described in the above section (Section 4. Utilization).
 ## Data availability
-Due to the space limitation, we present part of data used in this project in the folder `ProcessedData`. For the full data, please contact us.
+Due to the space limitation, we present part of data used in this project in the folder `ProcessedData`. We have also included a demo dataset that utilizes publicly available datasets in this study for reference. To access the demo data, please download [it](https://drive.google.com/file/d/1DqZC1FUkuKEDt88hT2qZRA44-k_UT3RI/view?usp=sharing) and place all of the files into the `ProcessedData` folder. Then you can directly run the model following above instructions. For the full data, please contact us.
 ## Contact
 If you have any questions, please contact us via email: 
 - [Jiannan Yang](mailto:jiannan.yang@my.cityu.edu.hk)
 - [Bing He](mailto:hebinghb@gmail.com)
-
