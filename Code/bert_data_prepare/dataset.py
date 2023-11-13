@@ -82,22 +82,22 @@ class BERTDataPrepare(object):
                            'Dash': (join(self.data_dir, 'Dash/human_mouse_pairseqs_v1_parsed_seqs_probs_mq20_clones.tsv'), self.Dash_loader),
                            'McPAS': (join(self.data_dir, 'McPAS/McPAS-TCR_20220728.csv'), self.McPAS_loader),
                            'NetTCR': (join(self.data_dir, 'NetTCR/train_ab_90_alphabeta.csv'), self.NetTCR_loader),
-                           'huARdb': (join(self.data_dir, 'huARdb/20220817_HUARC_VDJ_hcT.csv'), self.ZJU_data_loader)}
+                           'huARdb': (join(self.data_dir, 'huARdb/20220817_HUARC_VDJ_hcT.csv'), self.huARdb_data_loader)}
         
         valid_epitope_list, valid_cdr3a_list, valid_cdr3b_list = [], [], []
         for data in data_list:
             self.logger.info(data)
             if exists(join(self.save_dir, data, 'full.csv')):
                 df = pd.read_csv(join(self.save_dir, data, 'full.csv'))
+                valid_epitope_df, valid_cdr3a_df, valid_cdr3b_df = self._statistics(df)
             else:
                 save_dir = join(self.save_dir, data)
                 os.makedirs(save_dir, exist_ok=True)
                 df = total_data_dict[data][1](fn_source=total_data_dict[data][0])
-
-            valid_epitope_df, valid_cdr3a_df, valid_cdr3b_df = self._statistics(df)
-            self._save_df(save_dir, df=df, epitope_df=valid_epitope_df,
-                          cdr3a_df=valid_cdr3a_df, cdr3b_df=valid_cdr3b_df)
-
+                valid_epitope_df, valid_cdr3a_df, valid_cdr3b_df = self._statistics(df)
+                self._save_df(save_dir, df=df, epitope_df=valid_epitope_df,
+                              cdr3a_df=valid_cdr3a_df, cdr3b_df=valid_cdr3b_df)
+            
             valid_epitope_list += list(valid_epitope_df['epitope'])
             valid_cdr3a_list += list(valid_cdr3a_df['cdr3a'])
             valid_cdr3b_list += list(valid_cdr3b_df['cdr3b'])

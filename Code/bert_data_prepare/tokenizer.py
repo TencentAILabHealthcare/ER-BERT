@@ -110,7 +110,7 @@ class FMFMTokenizer(BaseTokenizer):
                     i += 1
                 else:
                     temp_token_list = list(set([seq[i: i+token_len] for token_len in self.token_length_list]))
-                    temp_token_freq = [self.vocab_freq_dict[token] for token in temp_token_list]
+                    temp_token_freq = [self.vocab_freq_dict[token] if token in self.vocab_freq_dict else 0 for token in temp_token_list]
                     if sum(temp_token_freq) == 0:
                         tokens.append(seq[i])
                         i += 1
@@ -147,7 +147,7 @@ class FMFCMTokenizer(BaseTokenizer):
                     i += 1
                 else:
                     temp_token_list = list(set([seq[i: i+token_len] for token_len in self.token_length_list]))
-                    temp_token_freq = [self.vocab_freq_dict[token] for token in temp_token_list]
+                    temp_token_freq = [self.vocab_freq_dict[token] if token in self.vocab_freq_dict else 0 for token in temp_token_list]
                     if sum(temp_token_freq) == 0:
                         tokens.append(seq[i])
                         i += 1

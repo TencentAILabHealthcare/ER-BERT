@@ -21,15 +21,15 @@ myBERTDataPrepare = BERTDataPrepare(logger=logger)
     'GenePlus-Cancer', 'GenePlus-COVID', 'MAB-COVID',
     'TCRdb', 'PIRD', 'Glanville',
     'Dash', 'McPAS', 'NetTCR', 'huARdb']'''
-df = myBERTDataPrepare.get_dataset(data_list=['McPAS'])
+df = myBERTDataPrepare.get_dataset(data_list=['Dash', 'Glanville', 'McPAS', 'NetTCR', 'PIRD', 'VDJdb'])
 
 EpitopeVocab = Vocab(seq_dir='../../ProcessedData/merged',
                      token_dir='../../ProcessedData/vocab',
                      logger=logger,
                      recreate=True,
                      use_seqs=['epitope'],
-                     token_len_list=[2,3,4,5],
-                     keep_ratio_list=[0.9]*4)
+                     token_len_list=[2, 3],
+                     keep_ratio_list=[0.9]*2)
 del EpitopeVocab
 
 BetaVocab = Vocab(seq_dir='../../ProcessedData/merged',
@@ -37,8 +37,8 @@ BetaVocab = Vocab(seq_dir='../../ProcessedData/merged',
                   logger=logger,
                   recreate=True,
                   use_seqs=['beta'],
-                  token_len_list=[2,3,4,5],
-                  keep_ratio_list=[0.9]*4)
+                  token_len_list=[2, 3],
+                  keep_ratio_list=[0.9]*2)
 del BetaVocab
 
 AlphaVocab = Vocab(seq_dir='../../ProcessedData/merged',

@@ -17,6 +17,8 @@ class Vocab(object):
                        keep_ratio_list=[0.9, 0.9, 0.9]):
         self.seq_dir = seq_dir
         self.token_dir = token_dir
+        if not os.path.exists(self.token_dir):
+            os.makedirs(self.token_dir)
         self.use_seqs = use_seqs
         self.logger = logger
         self.token_len_list = token_len_list
@@ -143,7 +145,7 @@ class Vocab(object):
         selected_token_df.to_csv(join('../../ProcessedData/vocab', save_name+'.csv'), index=False)            
 
     def _split2tokens(self, seq, token_len):
-        if len(seq) < token_len:
+        if type(seq) == str and len(seq) < token_len:
             return []
         taa_list = []
         start, end = 0, token_len
