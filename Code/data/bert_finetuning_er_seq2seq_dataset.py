@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import torch
 import numpy as np
 import pandas as pd
@@ -119,6 +120,9 @@ class EpitopeReceptorSeq2SeqDataset(object):
         self.receptor_seq_name = receptor_seq_name
         self.valid_split = valid_split
         self.encoder_input = encoder_input
+
+        if not os.path.exists(self.neg_pair_save_dir):
+            os.makedirs(self.neg_pair_save_dir)
 
         self.shuffle = shuffle
         self.epitope_max_len = epitope_max_len
