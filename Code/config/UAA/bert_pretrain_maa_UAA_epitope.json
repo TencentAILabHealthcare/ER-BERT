@@ -10,7 +10,7 @@
             "vocab_dir": "../ProcessedData/vocab/epitope-2-3.csv",
             "seed": 0,
             "seq_name": "epitope",
-            "tokenizer_type": "UAA",
+            "tokenizer_name": "UAA",
             "max_len": 64,
             "test_split": 0.01
         }

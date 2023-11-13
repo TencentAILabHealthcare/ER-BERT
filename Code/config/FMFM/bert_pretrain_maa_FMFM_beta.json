@@ -10,7 +10,7 @@
             "vocab_dir": "../ProcessedData/vocab/beta-2-3.csv",
             "seed": 0,
             "seq_name": "beta",
-            "tokenizer_type": "FMFM",
+            "tokenizer_name": "FMFM",
             "max_len": 32,
             "test_split": 0.001
         }

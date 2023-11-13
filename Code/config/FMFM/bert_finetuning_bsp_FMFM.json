@@ -38,7 +38,7 @@
         "type": "BERTBinding",
         "args": {
             "EpitopeBert_dir": "../Result/checkpoints/BERT-Epitope-Pretrain-FMFM-MAA/XXXX_XXXXXX",
-            "ReceptorBert_dir": "../Result/checkpoints/BERT-Beta-Pretrain-FMFM-MAA/XXXX_XXXXXX",
+        "ReceptorBert_dir": "../Result/checkpoints/BERT-Beta-Pretrain-FMFM-MAA/XXXX_XXXXXX",
             "emb_dim": 768
         }
     },
