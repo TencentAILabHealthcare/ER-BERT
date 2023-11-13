@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import torch
 import numpy as np
 import pandas as pd
@@ -105,6 +106,9 @@ class EpitopeReceptorDataset(BaseDataLoader):
         self.using_dataset = list(using_dataset.split(','))
         self.epitope_seq_name = epitope_seq_name
         self.receptor_seq_name = receptor_seq_name
+
+        if not os.path.exists(self.neg_pair_save_dir):
+            os.makedirs(self.neg_pair_save_dir)
 
         self.test_epitopes = test_epitopes
         self.neg_ratio = neg_ratio
